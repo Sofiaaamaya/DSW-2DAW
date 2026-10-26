@@ -44,39 +44,8 @@ $videojuegos = [
     ]
 ];
 
-$sumaStock = 0;
-$mediaPrecios = 0;
-$masCaro = "";
-$masBarato = "";
-$x = 0;
-$y = 10000;
 
-//---- Filtrado de videojuegos ----
-
-$economicos = [];
-
-foreach ($videojuegos as $videojuego){
-  $sumaStock += $videojuego['stock'];
-  $mediaPrecios += $videojuego['precio'];
-  if($videojuego['precio'] <= 30){
-    $economicos[] = $videojuego;
-  }
-  
-  if($videojuego['precio'] < $y){
-    $masBarato = $videojuego['titulo'];
-    $y = $videojuego['precio'];
-  }
-
-  if($videojuego['precio'] > $x){
-    $masCaro = $videojuego['titulo'];
-    $x = $videojuego['precio'];
-  }
-
-}
-
-// var_dump($economicos);
-
-// ------- Estadísticas ------
+// ----------------Modificar catálogo ----------------
 
 $nuevoJuego = [
     "titulo" => "Hades II",
@@ -89,19 +58,69 @@ $nuevoJuego = [
 array_pop($videojuegos);
 array_push($videojuegos, $nuevoJuego);
 
-// ------- Estadísticas ------
+
+// ----------------Estadísticas ----------------
+
+$sumaStock = 0;
+$mediaPrecios = 0;
+$masCaro = "";
+$masBarato = "";
+$maxPrecio = 0;
+$minPrecio = 99999;
+
+foreach ($videojuegos as $videojuego){
+    $sumaStock += $videojuego['stock'];
+    $mediaPrecios += $videojuego['precio'];
+
+    if ($videojuego['precio'] < $minPrecio){
+        $minPrecio = $videojuego['precio'];
+        $masBarato = $videojuego['titulo'];
+    }
+
+    if ($videojuego['precio'] > $maxPrecio){
+        $maxPrecio = $videojuego['precio'];
+        $masCaro = $videojuego['titulo'];
+    }
+}
 
 $totalVideojuegos = count($videojuegos);
 
 
-// ------- Ordenación ------
+// ----------------Filtrar económicos ----------------
+
+$economicos = [];
+
+foreach ($videojuegos as $videojuego){
+    if ($videojuego['precio'] < 30){
+        $economicos[] = $videojuego;
+    }
+}
 
 
+// ----------------Ordenación ----------------
 
-// ------- Arrays indexados ------
+$precios = [];
+
+foreach ($videojuegos as $videojuego){
+    $precios[$videojuego["titulo"]] = $videojuego["precio"];
+}
+
+$ordenPrecio = $precios;
+asort($ordenPrecio);
+
+$ordenTitulo = $precios;
+ksort($ordenTitulo);
 
 
+// ----------------Plataformas sin repetir ----------------
 
+$plataformas = [];
+
+foreach ($videojuegos as $videojuego){
+    if (!in_array($videojuego["plataforma"], $plataformas)){
+        $plataformas[] = $videojuego["plataforma"];
+    }
+}
 
 ?>
 
@@ -127,12 +146,6 @@ $totalVideojuegos = count($videojuegos);
     <div class="row align-items-center mb-5">
       <div class="col-md-6 mb-3 mb-md-0">
           <h1 class="fw-bold text-dark m-0">Catálogo de Videojuegos</h1>
-      </div>
-      <div class="col-md-6">
-          <form class="d-flex" role="search">
-              <input name="busqueda" class="form-control me-2" type="search" placeholder="Buscar película..." aria-label="Search"/>
-              <button class="btn btn-outline-primary text-nowrap" type="submit">Buscar</button>
-          </form>
       </div>
     </div>
 
@@ -201,6 +214,39 @@ $totalVideojuegos = count($videojuegos);
 
     </table>
   </div>
+
+  <div class="container mt-5">
+      <h2 class="text-warning">Ordenación por precio (asort)</h2>
+      <ul class="list-group">
+          <?php foreach ($ordenPrecio as $titulo => $precio): ?>
+              <li class="list-group-item">
+                  <?= htmlspecialchars($titulo) ?> — <?= number_format($precio, 2) ?> €
+              </li>
+          <?php endforeach; ?>
+      </ul>
+  </div>
+
+  <div class="container mt-4">
+      <h2 class="text-info">Ordenación alfabética (ksort)</h2>
+      <ul class="list-group">
+          <?php foreach ($ordenTitulo as $titulo => $precio): ?>
+              <li class="list-group-item">
+                  <?= htmlspecialchars($titulo) ?> — <?= number_format($precio, 2) ?> €
+              </li>
+          <?php endforeach; ?>
+      </ul>
+  </div>
+
+  <div class="container mt-5">
+    <h2 class="text-success">Plataformas disponibles</h2>
+    <ul class="list-group">
+        <?php foreach ($plataformas as $p): ?>
+            <li class="list-group-item"><?= htmlspecialchars($p) ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+
+
 </body>
 <script 
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
