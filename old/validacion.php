@@ -33,7 +33,7 @@ $nombre = $_POST['nombre'] ?? 'No definido';
 
 $patronCorreo = "/^[\w\-\.]+@([\w\-]+\.)+[a-zA-Z]{2,7}$/";
 $patronNumero = "/[0-9]{9,15}/";
-$patronNombre = "/^\w{5,20}$/"
+$patronNombre = "/^\w{5,20}$/";
 
 
 if(preg_match($patronCorreo,$_POST['correo'] )){
