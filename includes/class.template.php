@@ -28,7 +28,19 @@ class Template{
                 <script type=\"importmap\">{\"imports\": {\"bootstrap\": \"./assets/vendor/bootstrap6/js/bootstrap.bundle.min.js\"}}</script>
                 <link rel=\"stylesheet\" href=\"/assets/css/base.css\">
                 <link rel=\"stylesheet\" href=\"/assets/css/style.css\">
+
+                <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+                <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+                <script src=\"https://use.fontawesome.com/releases/v5.15.3/js/all.js\" crossorigin=\"anonymous\"></script>
+
+                <link rel=\"stylesheet\" href=\"{{\"/assets/main.css\" | relative_url }}\">
+                <link rel=\"canonical\" href=\"{{ page.url | replace:'index.html','' | absolute_url }}\">
+                <link rel=\"alternate\" type=\"application/rss+xml\" title=\"{{ site.title | escape }}\" href=\"{{ \"/feed.xml\" | relative_url }}\">
+
             </head>
+
+            
         ". self::navegacion()."
         
         <section class=\"hero\">
@@ -42,47 +54,33 @@ class Template{
     static function navegacion()
     {
         return "
-            <header class=\"site-header\">
-                <nav class=\"navbar lg:navbar-expand\" aria-label=\"Main\">
-                    <div class=\"container\">
-                        <a class=\"wordmark\" href=\"index.html\">
-                            <svg class=\"brand-glyph\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\">
-                                <rect x=\"1.25\" y=\"1.25\" width=\"21.5\" height=\"21.5\" rx=\"6.5\" stroke=\"currentColor\" stroke-width=\"1.5\"/>
-                                <path d=\"M7 16.5V7.5M7 16.5h5.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/>
-                                <path d=\"M17 7.5v9M14 11h6\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" opacity=\".5\"/>
-                            </svg>
-                            <span>Ledgerline</span>
-                        </a>
+          <!-- Navigation -->
+          <nav class=\"navbar navbar-expand-lg navbar-light fixed-top\" id=\"mainNav\">
+            <div class=\"container\">
+              <a class=\"navbar-brand\" href=\"{{\"/\" | relative_url }}\">{{ site.title | escape }}</a>
+              <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\" aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
+                Menu
+                <i class=\"fa fa-bars\"></i>
+              </button>
+              <div class=\"collapse navbar-collapse\" id=\"navbarResponsive\">
+                <ul class=\"navbar-nav ml-auto\">
+                  <li class=\"nav-item\">
+                    <a class=\"nav-link\" href=\"{{\"/\" | relative_url }}\">Home</a>
+                  </li>
+                  <li class=\"nav-item\">
+                    <a class=\"nav-link\" href=\"{{\"/about\" | relative_url }}\">About</a>
+                  </li>
+                  <li class=\"nav-item\">
+                    <a class=\"nav-link\" href=\"{{ \"/posts\" | relative_url }}\">Posts</a>
+                  </li>
+                  <li class=\"nav-item\">
+                    <a class=\"nav-link\" href=\"{{\"/contact\" | relative_url }}\">Contact</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
 
-                        <dialog class=\"drawer drawer-end\" tabindex=\"-1\" id=\"navDrawer\" aria-labelledby=\"navDrawerLabel\">
-                            <div class=\"drawer-header\">
-                                <h5 class=\"drawer-title\" id=\"navDrawerLabel\">Menu</h5>
-                                <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"drawer\" aria-label=\"Close\"></button>
-                            </div>
-                            <div class=\"drawer-body mb-3 lg:mb-0\">
-                                <ul class=\"nav navbar-nav ms-auto lg:gap-5\">
-                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"#product\">Product</a></li>
-                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"#developers\">Developers</a></li>
-                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"pricing.html\">Pricing</a></li>
-                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"#security\">Security</a></li>
-                                </ul>
-                            </div>
-                        </dialog>
-
-                        <div class=\"d-flex align-items-center gap-3 ms-auto\">
-                            <button class=\"btn-icon\" type=\"button\" id=\"themeToggle\" aria-label=\"Toggle color mode\">
-                                <svg class=\"theme-icon-light\" width=\"18\" height=\"18\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"3.25\"/><path d=\"M8 1v1.5M8 13.5V15M15 8h-1.5M2.5 8H1m11-4-1 1M5 11l-1 1m0-8 1 1m6 6 1 1\"/></svg>
-                                <svg class=\"theme-icon-dark\" width=\"18\" height=\"18\" viewBox=\"0 0 16 16\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278\"/></svg>
-                            </button>
-                            <a class=\"btn-text theme-secondary sign-in\" href=\"#developers\">Sign in</a>
-                            <a class=\"btn-solid theme-primary\" href=\"pricing.html\">Start building</a>
-                            <button class=\"btn-icon navbar-toggler\" type=\"button\" data-bs-toggle=\"drawer\" data-bs-target=\"#navDrawer\" aria-controls=\"navDrawer\" aria-label=\"Open navigation\">
-                                <span class=\"navbar-toggler-icon\" aria-hidden=\"true\"></span>
-                            </button>
-                        </div>
-                    </div>
-                </nav>
-            </header>
 
         ";
 
@@ -94,68 +92,82 @@ class Template{
     static function footer()
     {
         return "
+          <!-- Footer -->
+
+          <hr>
+
+          <footer>
+            <div class=\"container\">
+              <div class=\"row\">
+                <div class=\"col-lg-8 col-md-10 mx-auto\">
+                  <ul class=\"list-inline text-center\">
+                    {% if site.email %}
+                    <li class=\"list-inline-item\">
+                      <a href=\"mailto:{{ site.email | encode_email }}\">
+                        <span class=\"fa-stack fa-lg\">
+                          <i class=\"fas fa-circle fa-stack-2x\"></i>
+                          <i class=\"far fa-envelope fa-stack-1x fa-inverse\"></i>
+                        </span>
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% if site.twitter_username %}
+                    <li class=\"list-inline-item\">
+                      <a href=\"https://twitter.com/{{ site.twitter_username }}\">
+                        <span class=\"fa-stack fa-lg\">
+                          <i class=\"fas fa-circle fa-stack-2x\"></i>
+                          <i class=\"fab fa-twitter fa-stack-1x fa-inverse\"></i>
+                        </span>
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% if site.facebook_username %}
+                    <li class=\"list-inline-item\">
+                      <a href=\"https://www.facebook.com/{{ site.facebook_username }}\">
+                        <span class=\"fa-stack fa-lg\">
+                          <i class=\"fas fa-circle fa-stack-2x\"></i>
+                          <i class=\"fab fa-facebook-f fa-stack-1x fa-inverse\"></i>
+                        </span>
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% if site.linkedin_username %}
+                    <li class=\"list-inline-item\">
+                      <a href=\"https://www.linkedin.com/in/{{ site.linkedin_username }}\">
+                        <span class=\"fa-stack fa-lg\">
+                          <i class=\"fas fa-circle fa-stack-2x\"></i>
+                          <i class=\"fab fa-linkedin fa-stack-1x fa-inverse\"></i>
+                        </span>
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% if site.github_username %}
+                    <li class=\"list-inline-item\">
+                      <a href=\"https://github.com/{{ site.github_username }}\">
+                        <span class=\"fa-stack fa-lg\">
+                          <i class=\"fas fa-circle fa-stack-2x\"></i>
+                          <i class=\"fab fa-github fa-stack-1x fa-inverse\"></i>
+                        </span>
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% if site.instagram_username %}
+                    <li class=\"list-inline-item\">
+                      <a href=\"https://instagram.com/{{ site.instagram_username }}\">
+                        <span class=\"fa-stack fa-lg\">
+                          <i class=\"fas fa-circle fa-stack-2x\"></i>
+                          <i class=\"fab fa-instagram fa-stack-1x fa-inverse\"></i>
+                        </span>
+                      </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                  <p class=\"copyright text-muted\">Copyright &copy; {{ site.author }} {{ 'now' | date: \"%Y\" }}</p>
                 </div>
-            </section>
-                    <footer class=\"site-footer section pb-6\">
-                        <div class=\"container\">
-                            <div class=\"row g-6\">
-                                <div class=\"lg:col-4\">
-                                    <p class=\"wordmark mb-4\">
-                                        <svg class=\"brand-glyph\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\">
-                                            <rect x=\"1.25\" y=\"1.25\" width=\"21.5\" height=\"21.5\" rx=\"6.5\" stroke=\"currentColor\" stroke-width=\"1.5\"/>
-                                            <path d=\"M7 16.5V7.5M7 16.5h5.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/>
-                                            <path d=\"M17 7.5v9M14 11h6\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" opacity=\".5\"/>
-                                        </svg>
-                                        <span>Ledgerline</span>
-                                    </p>
-                                    <p class=\"fg-2 fs-sm mb-0\" style=\"max-width:22rem\">
-                                        Payments, payouts and a double-entry ledger behind one API. Priced so
-                                        you can work out the bill yourself.
-                                    </p>
-                                </div>
-                                <div class=\"md:col-4 lg:col-2\">
-                                    <p class=\"eyebrow fs-xs fg-3 mb-4\">Product</p>
-                                    <ul class=\"link-list\">
-                                        <li><a href=\"index.html#product\">Payments</a></li>
-                                        <li><a href=\"index.html#product\">Payouts</a></li>
-                                        <li><a href=\"index.html#product\">Ledger API</a></li>
-                                        <li><a href=\"pricing.html\">Pricing</a></li>
-                                    </ul>
-                                </div>
-                                <div class=\"md:col-4 lg:col-2\">
-                                    <p class=\"eyebrow fs-xs fg-3 mb-4\">Developers</p>
-                                    <ul class=\"link-list\">
-                                        <li><a href=\"index.html#developers\">Quickstart</a></li>
-                                        <li><a href=\"index.html#developers\">API reference</a></li>
-                                        <li><a href=\"index.html#developers\">Status</a></li>
-                                        <li><a href=\"index.html#security\">Security</a></li>
-                                    </ul>
-                                </div>
-                                <div class=\"md:col-4 lg:col-4\">
-                                    <p class=\"eyebrow fs-xs fg-3 mb-4\">Regulatory</p>
-                                    <p class=\"fg-2 fs-sm mb-0\">
-                                        Ledgerline is a fictional company in a free website template. Nothing
-                                        here is a real financial product, a real rate, or regulated by anyone.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <hr class=\"my-6\">
-
-                            <p class=\"fs-xs fg-3 mb-0\">&copy; <span data-year>\". date('Y') .\"</span> Ledgerline &mdash; a free Bootstrap 6 template.</p>
-                        </div>
-                    </footer>
-
-                    <script type=\"module\" src=\"assets/js/main.js\"></script>
-                </body>
-            </html>
-
-
+              </div>
+            </div>
+          </footer>
         ";
-
-
-
-
     }
 
 
