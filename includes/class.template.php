@@ -12,7 +12,7 @@ class Template{
 
 
 
-    static function header($titulo,$descripcion='', $autor='', $content='')
+    static function header($titulo='',$descripcion='', $autor='', $content='')
     {
 
         return "
