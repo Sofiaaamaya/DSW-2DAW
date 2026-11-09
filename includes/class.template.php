@@ -25,14 +25,14 @@ class Template{
                 <title>{$titulo}</title>
                 <meta name=\"description\" content=\"{$descripcion}\">
                 <!-- Favicon-->
-                <link rel=\"icon\" type=\"image/x-icon\" href=\"new_template/assets/favicon.ico\" />
+                <link rel=\"icon\" type=\"image/x-icon\" href=\"/new_template/assets/favicon.ico\" />
                 <!-- Font Awesome icons (free version)-->
                 <script src=\"https://use.fontawesome.com/releases/v6.3.0/js/all.js\" crossorigin=\"anonymous\"></script>
                 <!-- Google fonts-->
                 <link href=\"https://fonts.googleapis.com/css?family=Montserrat:400,700\" rel=\"stylesheet\" type=\"text/css\" />
                 <link href=\"https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700\" rel=\"stylesheet\" type=\"text/css\" />
                 <!-- Core theme CSS (includes Bootstrap)-->
-                <link href=\"new_template/css/styles.css\" rel=\"stylesheet\" />
+                <link href=\"/new_template/css/styles.css\" rel=\"stylesheet\" />
             </head>
 
             
@@ -49,7 +49,7 @@ class Template{
           <!-- Navigation -->
            <nav class=\"navbar navbar-expand-lg navbar-dark fixed-top\" id=\"mainNav\">
             <div class=\"container\">
-                <a class=\"navbar-brand\" href=\"#page-top\"><img src=\"new_template/assets/img/navbar-logo.svg\" alt=\"...\" /></a>
+                <a class=\"navbar-brand\" href=\"#page-top\"><img src=\"/new_template/assets/img/navbar-logo.svg\" alt=\"...\" /></a>
                 <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarResponsive\" aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
                     Menu
                     <i class=\"fas fa-bars ms-1\"></i>
@@ -443,7 +443,7 @@ class Template{
                 <div class=\"portfolio-modal modal fade\" id=\"portfolioModal1\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
                     <div class=\"modal-dialog\">
                         <div class=\"modal-content\">
-                            <div class=\"close-modal\" data-bs-dismiss=\"modal\"><img src=\"new_template/assets/img/close-icon.svg\" alt=\"Close modal\" /></div>
+                            <div class=\"close-modal\" data-bs-dismiss=\"modal\"><img src=\"/new_template/assets/img/close-icon.svg\" alt=\"Close modal\" /></div>
                             <div class=\"container\">
                                 <div class=\"row justify-content-center\">
                                     <div class=\"col-lg-8\">
