@@ -4,4 +4,6 @@ RewriteEngine On
 
 RewriteRule ^usuarios/([^/]+)/([0-9]+)/?$ index.php?seccion=usuarios&oper=$1&pagina=$2 [L]
 
+RewriteRule ^usuarios/([^/]+)/([0-9]+)/?$ index.php?seccion=usuarios&oper=$1 [L]
+
 #RewriteRule ^producto/([0-9]+)$ index.php?seccion=producto&id=$1 [L]
