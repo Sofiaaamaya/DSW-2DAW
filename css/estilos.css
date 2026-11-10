@@ -1,0 +1,19 @@
+
+
+
+.error label,.error input{
+    color:#ff0000;
+}
+
+.error input{
+    border:1px solid #ff0000;
+}
+
+.info_errores{
+    background-color: #b85656;
+    border-radius: 10px;
+    color:#ccc;
+
+    border: 1px solid #ff0000;
+    padding: 15px 10px;
+}
