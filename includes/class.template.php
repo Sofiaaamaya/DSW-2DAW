@@ -47,13 +47,13 @@ class Template{
             <header class=\"site-header\">
                 <nav class=\"navbar lg:navbar-expand\" aria-label=\"Main\">
                     <div class=\"container\">
-                        <a class=\"wordmark\" href=\"index.html\">
+                        <a class=\"wordmark\" href=\"/\">
                             <svg class=\"brand-glyph\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\">
                                 <rect x=\"1.25\" y=\"1.25\" width=\"21.5\" height=\"21.5\" rx=\"6.5\" stroke=\"currentColor\" stroke-width=\"1.5\"/>
                                 <path d=\"M7 16.5V7.5M7 16.5h5.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/>
                                 <path d=\"M17 7.5v9M14 11h6\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" opacity=\".5\"/>
                             </svg>
-                            <span>Ledgerline</span>
+                            <span>Lanzarote</span>
                         </a>
 
                         <dialog class=\"drawer drawer-end\" tabindex=\"-1\" id=\"navDrawer\" aria-labelledby=\"navDrawerLabel\">
@@ -63,7 +63,7 @@ class Template{
                             </div>
                             <div class=\"drawer-body mb-3 lg:mb-0\">
                                 <ul class=\"nav navbar-nav ms-auto lg:gap-5\">
-                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"#product\">Product</a></li>
+                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"/usuarios/listado/0\">Usuarios</a></li>
                                     <li class=\"nav-item\"><a class=\"nav-link\" href=\"#developers\">Developers</a></li>
                                     <li class=\"nav-item\"><a class=\"nav-link\" href=\"pricing.html\">Pricing</a></li>
                                     <li class=\"nav-item\"><a class=\"nav-link\" href=\"#security\">Security</a></li>
@@ -108,7 +108,7 @@ class Template{
                                             <path d=\"M7 16.5V7.5M7 16.5h5.5\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/>
                                             <path d=\"M17 7.5v9M14 11h6\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" opacity=\".5\"/>
                                         </svg>
-                                        <span>Ledgerline</span>
+                                        <span>Lanzarote</span>
                                     </p>
                                     <p class=\"fg-2 fs-sm mb-0\" style=\"max-width:22rem\">
                                         Payments, payouts and a double-entry ledger behind one API. Priced so
