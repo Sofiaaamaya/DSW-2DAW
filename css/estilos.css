@@ -17,3 +17,8 @@
     border: 1px solid #ff0000;
     padding: 15px 10px;
 }
+
+[readonly="readonly"]{
+    color: #6a6a6a;
+    background: #c2c1c1;
+}

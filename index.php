@@ -5,205 +5,154 @@
 
     echo Template::header('Lanzarote');
 
+    $usuario = new Usuario();
+
     switch($_GET['seccion'])
     {
         case 'usuarios':
             //Cargamos la sección usuarios
 
-            $url_form = '/usuarios/alta';
+            $url_form = '/usuarios/'.$_GET['oper'];
+            
             switch($_GET ['oper'])
             {
-                case 'del':
-                  $id = $_GET['pagina'];
 
-                  $url_form = '/usuarios/del/'.$id;
+                case 'baja':
 
-                case 'cons':
-                  $id = $_GET['pagina'];
+                    $operacion = 'Eliminación';
 
-                  $url_form = '/usuarios/cons/'.$id;
-
-                case 'modi':
-
-                    
 
                     $id = $_GET['pagina'];
 
-                    $url_form = '/usuarios/modi/'.$id;
+
+                   
+
+
+                case 'modi':
+
+
+                    $operacion = empty($operacion)? 'Modificación': $operacion;
+
+                    $id = $_GET['pagina'];
+
+                    $url_form .= '/'.$id;
+
+                    
+
+                    
+
 
                 case 'alta':
-
-                    if($_GET['oper'] == 'alta'){
-                      define('OPERACION','Alta');
-                    } elseif($_GET['oper'] == 'modi'){
-                      define('OPERACION','Modificación');
-                    }elseif($_GET['oper'] == 'cons'){
-                      define('OPERACION','Consulta');
-                    }elseif($_GET['oper'] == 'del'){
-                      define('OPERACION','Eliminación');
-                    }
-
-                    $boton_oper = "<input type=\"submit\" class=\"theme-primary btn-solid btn-styled\" value=\"". OPERACION ." de usuario\" />";
+                    $operacion = empty($operacion)? 'Alta': $operacion;
 
                     
+
+                    define("OPERACION", $operacion);
+
+                    $boton_alta = "<input type=\"submit\" class=\"theme-primary btn-solid btn-styled\" value=\"". OPERACION ." de usuario\" />";
                     
                     $errores = false;
-                    $disabled = '';
+                    $disabled = $_GET['oper'] == 'baja'?  " readonly=\"readonly\" " : '';
+
+                    if($_POST['paso'] == '1')
+                    {
+
+                        $_texto_errores = '';
+
+                        if (strlen($_POST['nombre']) < 3)
+                        {
+
+                            $_error_nombre = 'error';
+                            $_texto_errores = '<p>- El nombre debe tener al menos 3 caracteres.</p>';
+                            
+                            $errores = true;
+                        }
+
+                        if (strlen($_POST['apellido1']) < 3)
+                        {
+
+                            $_error_apellido1 = 'error';
+                            $_texto_errores .= '<p>- El primer apellido debe tener al menos 3 caracteres.</p>';
+                            
+                            $errores = true;
+                        }
+                        
+                        if (strlen($_POST['apellido2']) < 3)
+                        {
+
+                            $_error_apellido2 = 'error';
+                            $_texto_errores .= '<p>- El segundo apellido debe tener al menos 3 caracteres.</p>';
+                            
+                            $errores = true;
+                        }
+                        
+
+                        if (!fecha_valida($_POST['fecha_nacimiento']))
+                        {
+
+                            $_error_fecha_nacimiento = 'error';
+                            $_texto_errores .= '<p>- La fecha de nacimiento no tiene un formato válido.</p>';
+                            
+                            $errores = true;
+                        }
+
+                        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+                        {
+
+                            $_error_email = 'error';
+                            $_texto_errores .= '<p>- El E-mail no tiene un formato válido.</p>';
+                            
+                            $errores = true;
+                        }
+
+                        if ($errores)
+                        {
+                            $mensajes_errores = "
+                                <div class=\"info_errores mb-5 mt-5\" role=\"alert\">
+                                {$_texto_errores}
+                                </div>
+                            
+                            ";
+                        }
+                        else
+                        {
+                            $mensaje_exito = "
+                                <div class=\"alert theme-success  mb-5 mt-5\" role=\"alert\">
+                                    <p>Operación realizada con éxito</p>
+                                </div>
+                            ";
+                            $boton_alta = '';
+
+                            $disabled = " disabled=\"disabled\" ";
 
 
-                      if($_POST['paso'] == '1')
-                      {
+                            switch($_GET['oper'])
+                            {
+                                case 'alta':
+                                    $usuario->insertar($_POST);
 
-                          $_texto_errores = '';
+                                break;
+                                case 'modi':
+                                    $usuario->modificar($_POST);
+                                break;
 
-                          if (strlen($_POST['nombre']) < 3)
-                          {
+                                case 'baja':
 
-                              $_error_nombre = 'error';
-                              $_texto_errores = '<p>- El nombre debe tener al menos 3 caracteres.</p>';
-                              
-                              $errores = true;
-                          }
+                                    echo "Aquí tendremos que eliminar";
 
-                          if (strlen($_POST['apellido1']) < 3)
-                          {
-
-                              $_error_apellido1 = 'error';
-                              $_texto_errores .= '<p>- El primer apellido debe tener al menos 3 caracteres.</p>';
-                              
-                              $errores = true;
-                          }
-                          
-                          if (strlen($_POST['apellido2']) < 3)
-                          {
-
-                              $_error_apellido2 = 'error';
-                              $_texto_errores .= '<p>- El segundo apellido debe tener al menos 3 caracteres.</p>';
-                              
-                              $errores = true;
-                          }
-                          
-
-                          if (!fecha_valida($_POST['fecha_nacimiento']))
-                          {
-
-                              $_error_fecha_nacimiento = 'error';
-                              $_texto_errores .= '<p>- La fecha de nacimiento no tiene un formato válido.</p>';
-                              
-                              $errores = true;
-                          }
-
-                          if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-                          {
-
-                              $_error_email = 'error';
-                              $_texto_errores .= '<p>- El E-mail no tiene un formato válido.</p>';
-                              
-                              $errores = true;
-                          }
-
-                          if ($errores)
-                          {
-                              $mensajes_errores = "
-                                  <div class=\"info_errores mb-5 mt-5\" role=\"alert\">
-                                  {$_texto_errores}
-                                  </div>
-                              
-                              ";
-                          }
-                          else
-                          {
-                              $mensaje_exito = "
-                                  <div class=\"alert theme-success  mb-5 mt-5\" role=\"alert\">
-                                      <p>Operación realizada con éxito</p>
-                                  </div>
-                              ";
-                              $boton_oper = '';
-
-                              $disabled = " disabled=\"disabled\" ";
+                                    $usuario->eliminar($_POST['id']);
 
 
-                              switch($_GET['oper'])
-                              {
-                                  case 'alta':
-                                      $query = new Query("
-                                          INSERT INTO usuarios
-                                          (
-                                              nombre    
-                                              ,apellido1 
-                                              ,apellido2 
-                                              ,fecha_nacimiento 
-                                              ,email 
-
-                                              ,fecha_alta   
-                                              ,ip_alta      
-                                              ,fecha_modi   
-                                              ,ip_modi      
-                                          )
-                                          VALUES
-                                          (
-                                              '". $_POST['nombre']           ."'
-                                              ,'". $_POST['apellido1']        ."'
-                                              ,'". $_POST['apellido2']        ."'
-                                              ,'". $_POST['fecha_nacimiento'] ."'
-                                              ,'". $_POST['email']            ."'
+                                    ob_clean();
+                                    header("Location: /usuarios/listado/0");
+                                    exit;
 
 
-                                              ,now()
-                                              ,'". $_SERVER['SERVER_ADDR']    ."'
-                                              ,now()
-                                              ,'". $_SERVER['SERVER_ADDR']    ."'
-                                              
-                                          )
-                                      
-                                      ");
-                                  break;
-                                  case 'modi':
+                                break;
+                            }
+                            
+                        }
 
-                                      $query = new Query("
-                                          UPDATE usuarios
-
-                                          SET
-                                              nombre             = '". $_POST['nombre']           ."'
-                                              ,apellido1          = '". $_POST['apellido1']        ."'
-                                              ,apellido2          = '". $_POST['apellido2']        ."'
-                                              ,fecha_nacimiento   = '". $_POST['fecha_nacimiento'] ."'
-                                              ,email              = '". $_POST['email']            ."'
-
-                                              ,fecha_modi         = now()
-                                              ,ip_modi            = '". $_SERVER['SERVER_ADDR']    ."'
-
-                                          WHERE id = '{$id}'
-                                      
-                                      ");
-
-
-
-                                  break;
-                                  case 'del':
-
-                                      $query = new Query("
-                                          DELETE FROM usuarios
-                                          WHERE id = '{$id}'
-                                      
-                                      ");
-
-
-
-                                  break;
-                                  case 'cons':
-
-                                      $query = new Query("
-                                          SELECT * 
-                                          FROM   usuarios
-                                          WHERE  id = '{$id}'
-                                      ");
-
-                                  break;
-                              }
-                              
-                          }
-                    
 
 
                     }
@@ -227,7 +176,7 @@
 
 
 
-                  }
+                    }
 
 
 
@@ -265,19 +214,15 @@
                             <div class=\"form-field mb-4 {$_error_email}\">
                                 <label for=\"emailID\" class=\"form-label\">Email</label>
                                 <input {$disabled} type=\"email\" name=\"email\" class=\"form-control\" id=\"emailID\" value=\"{$_POST['email']}\" placeholder=\"nombre@dominio.com\">
-                            </div>";                          
+                            </div>
+
+                            {$boton_alta}
 
 
-                           if($_GET['oper']=='cons'){
-                              $boton_oper = '';
-                              echo "</form>";
-                           }else{
-                              echo "
-                              {$boton_oper}
-                            </form>";
-                           }
-
+                        </form>
                         
+
+                    ";
 
 
                 break;
@@ -301,9 +246,10 @@
                         SELECT * 
                         FROM usuarios
 
-                        
+                        ORDER BY fecha_alta DESC
                         LIMIT ". TOTAL_PAGINAS_LISTADO ."
                         OFFSET ". ($_GET['pagina'] * TOTAL_PAGINAS_LISTADO )  ."
+                        
                         ;
                     ");
 
@@ -335,15 +281,12 @@
                     while ($registro = $query->recuperar())
                     {
 
-                        $modificacion = "<a class=\"theme-info btn-solid btn-styled\" href=\"/usuarios/modi/{$registro['id']}\"><i class=\"bi bi-pencil-square\"></i></a>";
-                        $eliminacion = "<a class=\"theme-danger btn-solid btn-styled\" href=\"/usuarios/del/{$registro['id']}\"><i class=\"bi bi-trash-fill\"></i></a>";
-                        $consulta = "<a class=\"theme-success btn-solid btn-styled\" href=\"/usuarios/cons/{$registro['id']}\"><i class=\"bi bi-search\"></i></a>";
+                        $modificacion = "<a class=\"btn-solid theme-primary\" href=\"/usuarios/modi/{$registro['id']}\"><i class=\"bi bi-pencil-square\"></i></a>";
+                        $baja         = "<a class=\"btn-solid theme-danger\" href=\"/usuarios/baja/{$registro['id']}\"><i class=\"bi bi-trash\"></i></a>";
 
                         echo "
                             <tr>
-                                <td>{$modificacion}</td>
-                                <td>{$eliminacion}</td>
-                                <td>{$consulta}</td>
+                                <td>{$modificacion} {$baja}</td>
                                 <td>".$registro['id']."</td>
                                 <td>".$registro['nombre']."</td>
                                 <td>".$registro['apellido1']."</td>
