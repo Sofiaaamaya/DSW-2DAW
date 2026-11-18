@@ -7,14 +7,11 @@ define('TOTAL_PAGINAS_LISTADO', 10);
 
 spl_autoload_register(function ($class_name) {
 
-    $subdirectorio = 'usuario/';
+    $subdirectorio = 'modelo/';
     if ($class_name == 'BBDD' || $class_name == 'Query')
         $subdirectorio = 'bbdd/';
-    elseif ($class_name == 'modelo' )
-        $subdirectorio = 'modelo/';
     elseif($class_name == 'Template')
         $subdirectorio = '';
-
 
 
     require_once "includes/{$subdirectorio}class.". strtolower($class_name) .'.php';

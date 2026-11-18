@@ -1,80 +1,32 @@
 <?php
 
+class Modelo
+{
 
-class Modelo{
- private $tabla;
-
-
-    function __construct()
-    {
-        $this->tabla = 'usuarios';
-    }
-
-
-
-    function recuperar($id)
-    {
-        $query = Query("
-            SELECT *
-            FROM {$this->tabla}
-            WHERE id = '{$id}';
-        ");
-
-        $registro = $query->recuperar();
-
-        $this->nombre            = $registro['nombre'];  
-        $this->apellido1         = $registro['apellido1'];  
-        $this->apellido2         = $registro['apellido2'];  
-        $this->fecha_nacimiento  = $registro['fecha_nacimiento'];
-        $this->email             = $registro['email'];
-        $this->fecha_alta        = $registro['fecha_alta'];  
-        $this->ip_alta           = $registro['ip_alta'];    
-        $this->fecha_modi        = $registro['fecha_modi']; 
-        $this->ip_modi           = $registro['ip_modi'];  
-
-
-    }
-
-
-    function insertar($registro)
+    function inicializar($datos)
     {
 
         $query = new Query("
-            INSERT INTO {$this->tabla}
-            (
-                 nombre    
-                ,apellido1 
-                ,apellido2 
-                ,fecha_nacimiento 
-                ,email 
 
-                ,fecha_alta   
-                ,ip_alta      
-                ,fecha_modi   
-                ,ip_modi      
-            )
-            VALUES
-            (
-                '". $registro['nombre']           ."'
-                ,'". $registro['apellido1']        ."'
-                ,'". $registro['apellido2']        ."'
-                ,'". $registro['fecha_nacimiento'] ."'
-                ,'". $registro['email']            ."'
+            SELECT COLUMN_NAME 
+            FROM   information_schema.columns
+            WHERE  table_name = '{$this->tabla}' 
+            AND    table_schema = '". BBDD::$baseDatos ."';
 
 
-                ,now()
-                ,'". $_SERVER['SERVER_ADDR']    ."'
-                ,now()
-                ,'". $_SERVER['SERVER_ADDR']    ."'
-                
-            )
-        
         ");
 
-        return $query->total;
+
+        while($registro = $query->recuperar())
+        {
+
+            $campo_nuevo = $registro['COLUMN_NAME'];
+
+            $this->$campo_nuevo = $datos[$campo_nuevo];
+    
+        }
 
     }
-
 
     function eliminar($id)
     {
@@ -84,19 +36,82 @@ class Modelo{
     }
 
 
-    function modificar($registro)
+    function recuperar($id)
     {
+        $query = new Query("
+            SELECT *
+            FROM {$this->tabla}
+            WHERE id = '{$id}';
+        ");
+
+        $registro = $query->recuperar();
+
+        $this->inicializar($registro);
+
+        return $registro;
+
+    }
+
+
+
+    function insertar($registro)
+    {
+        $claves_insertar = $values_insertar = '';
+
+
+        foreach($registro as $clave => $valor)
+        {
+
+            $claves_insertar .= " {$clave}, ";
+            $values_insertar .= " '{$valor}', ";    
+        }
+
+
+        $sql = "
+            INSERT INTO {$this->tabla}
+            (
+                 {$claves_insertar}
+
+                 fecha_alta   
+                ,ip_alta      
+
+            )
+            VALUES
+            (
+                {$values_insertar}
+
+
+                 now()
+                ,'". $_SERVER['SERVER_ADDR']    ."'
+                
+            );
+        
+        ";
+
+        //echo $sql;exit;
+
+
+        $query = new Query($sql);
+
+        return $query->total;
+
+    }
+
+
+    function modificar($registro,$id)
+    {
+        $updates = '';
+
+        foreach($registro as $clave => $valor)
+        {
+            $updates .= " {$clave} = '{$valor}', ";
+        }
+
 
         $query = new Query("
             UPDATE {$this->tabla}
 
-            SET
-                 nombre             = '". $registro['nombre']           ."'
-                ,apellido1          = '". $registro['apellido1']        ."'
-                ,apellido2          = '". $registro['apellido2']        ."'
-                ,fecha_nacimiento   = '". $registro['fecha_nacimiento'] ."'
-                ,email              = '". $registro['email']            ."'
-
+            SET {$updates}
                 ,fecha_modi         = now()
                 ,ip_modi            = '". $_SERVER['SERVER_ADDR']    ."'
 
@@ -105,6 +120,59 @@ class Modelo{
         ");
 
         return $query->total;
+    }
+
+
+
+    function listado($consulta=[])
+    {
+        $devolver = array();
+
+        $select = is_null($consulta['select']) ? '*': $consulta['select'];
+        $limit  = is_null($consulta['limit'])  ? ' ': "LIMIT {$consulta['limit']}";
+        $offset = is_null($consulta['offset']) ? ' ': "OFFSET {$consulta['offset']}";
+
+        $where = '';
+
+        if(!is_null($consulta['where']))
+        {
+            foreach($consulta['where'] as $clave => $valor)
+            {
+                $where .= " AND {$clave} = '{$valor}' ";
+            }
+        }
+
+        $query = new Query("
+            SELECT COUNT(*) AS total_registros
+            FROM {$this->tabla}
+            WHERE 1 = 1 {$where}
+        ");
+
+        $registro = $query->recuperar();
+
+        $devolver['total_registros'] = $registro['total_registros'];
+
+
+        $query = new Query("
+            SELECT {$select}
+            FROM {$this->tabla}
+            WHERE 1 = 1 {$where}
+            {$limit}
+            {$offset}
+        ");
+        
+        $registros = array();
+        while($registro = $query->recuperar())
+        {
+            $registros[$registro['id']] = $registro;
+
+        }
+
+        $devolver['registros'] = $registros;
+        
+
+        return $devolver;
+
     }
 
 }

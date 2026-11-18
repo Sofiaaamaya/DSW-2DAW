@@ -13,7 +13,10 @@
             //Cargamos la sección usuarios
 
             $url_form = '/usuarios/'.$_GET['oper'];
+
             
+            
+
             switch($_GET ['oper'])
             {
 
@@ -129,11 +132,28 @@
                             switch($_GET['oper'])
                             {
                                 case 'alta':
-                                    $usuario->insertar($_POST);
+                                    
+                                    $datos_insertar = array();
+                                    $datos_insertar['nombre']           = $_POST['nombre'];
+                                    $datos_insertar['apellido1']        = $_POST['apellido1'];
+                                    $datos_insertar['apellido2']        = $_POST['apellido2'];
+                                    $datos_insertar['fecha_nacimiento'] = $_POST['fecha_nacimiento'];
+                                    $datos_insertar['email']            = $_POST['email'];
+
+
+                                    $usuario->insertar($datos_insertar);
 
                                 break;
                                 case 'modi':
-                                    $usuario->modificar($_POST);
+
+                                    $datos_modificar = array();
+                                    $datos_modificar['nombre']           = $_POST['nombre'];
+                                    $datos_modificar['apellido1']        = $_POST['apellido1'];
+                                    $datos_modificar['apellido2']        = $_POST['apellido2'];
+                                    $datos_modificar['fecha_nacimiento'] = $_POST['fecha_nacimiento'];
+                                    $datos_modificar['email']            = $_POST['email'];
+
+                                    $usuario->modificar($datos_modificar,$id);
                                 break;
 
                                 case 'baja':
@@ -158,23 +178,7 @@
                     }
                     elseif(!empty($id))
                     {
-                        $query = new Query("
-                            SELECT * 
-                            FROM   usuarios
-                            WHERE  id = '{$id}'
-                        ");
-
-                        $registro = $query->recuperar();
-
-                        $_POST['id']               = $registro['id'];
-                        $_POST['nombre']           = $registro['nombre'];
-                        $_POST['apellido1']        = $registro['apellido1'];
-                        $_POST['apellido2']        = $registro['apellido2'];
-                        $_POST['email']            = $registro['email'];
-                        $_POST['fecha_nacimiento'] = $registro['fecha_nacimiento'];
-                        $_POST['fecha_nacimiento'] = $registro['fecha_nacimiento'];
-
-
+                        $_POST = $usuario->recuperar($id);
 
                     }
 
@@ -228,30 +232,15 @@
                 break;
 
                 default:
-                    $query = new Query("
-                        SELECT count(*) as total_registros
-                        FROM   usuarios
-                    ");
 
-                    $registro = $query->recuperar();
+                    $datos_usuarios = $usuario->listado([
+                        'limit'  => TOTAL_PAGINAS_LISTADO
+                       ,'offset' => $_GET['pagina'] * TOTAL_PAGINAS_LISTADO
 
-                    $total_registros = $registro['total_registros'];
+                    ]);
 
-
-            
-
-
-
-                    $query = new Query("
-                        SELECT * 
-                        FROM usuarios
-
-                        ORDER BY fecha_alta DESC
-                        LIMIT ". TOTAL_PAGINAS_LISTADO ."
-                        OFFSET ". ($_GET['pagina'] * TOTAL_PAGINAS_LISTADO )  ."
-                        
-                        ;
-                    ");
+                    $registros       = $datos_usuarios['registros'];
+                    $total_registros = $datos_usuarios['total_registros'];
 
                 
 
@@ -278,7 +267,7 @@
 
 
 
-                    while ($registro = $query->recuperar())
+                    foreach($registros as $id => $registro)
                     {
 
                         $modificacion = "<a class=\"btn-solid theme-primary\" href=\"/usuarios/modi/{$registro['id']}\"><i class=\"bi bi-pencil-square\"></i></a>";
