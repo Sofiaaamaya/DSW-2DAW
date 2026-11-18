@@ -64,7 +64,7 @@ class Template{
                             <div class=\"drawer-body mb-3 lg:mb-0\">
                                 <ul class=\"nav navbar-nav ms-auto lg:gap-5\">
                                     <li class=\"nav-item\"><a class=\"nav-link\" href=\"/usuarios/listado/0\">Usuarios</a></li>
-                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"#developers\">Developers</a></li>
+                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"/peliculas/listado/0\">Peliculas</a></li>
                                     <li class=\"nav-item\"><a class=\"nav-link\" href=\"pricing.html\">Pricing</a></li>
                                     <li class=\"nav-item\"><a class=\"nav-link\" href=\"#security\">Security</a></li>
                                 </ul>
