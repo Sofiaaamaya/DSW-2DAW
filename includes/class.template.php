@@ -63,8 +63,8 @@ class Template{
                             </div>
                             <div class=\"drawer-body mb-3 lg:mb-0\">
                                 <ul class=\"nav navbar-nav ms-auto lg:gap-5\">
-                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"/usuarios/listado/0\">Usuarios</a></li>
-                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"/peliculas/listado/0\">Peliculas</a></li>
+                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"/usuarios/listado/0\">". Idioma::lit('usuarios') ."</a></li>
+                                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"#developers\">Developers</a></li>
                                     <li class=\"nav-item\"><a class=\"nav-link\" href=\"pricing.html\">Pricing</a></li>
                                     <li class=\"nav-item\"><a class=\"nav-link\" href=\"#security\">Security</a></li>
                                 </ul>
@@ -81,6 +81,11 @@ class Template{
                             <button class=\"btn-icon navbar-toggler\" type=\"button\" data-bs-toggle=\"drawer\" data-bs-target=\"#navDrawer\" aria-controls=\"navDrawer\" aria-label=\"Open navigation\">
                                 <span class=\"navbar-toggler-icon\" aria-hidden=\"true\"></span>
                             </button>
+                        </div>
+                        <div class=\"idiomas\">
+                            <a href=\"http://en.lanzarote.lan/\"><img  src=\"/img/flags/en.svg\" /></a>
+                            <a href=\"http://de.lanzarote.lan/\"><img  src=\"/img/flags/de.svg\" /></a>
+                            <a href=\"http://www.lanzarote.lan/\"><img  src=\"/img/flags/es.svg\" /></a>
                         </div>
                     </div>
                 </nav>

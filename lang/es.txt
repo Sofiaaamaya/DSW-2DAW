@@ -1,0 +1,17 @@
+usuarios:Usuarios    
+eliminacion:Eliminación
+modificacion:Modificación
+alta:Alta
+error_caracteres:el %s debe tener al menos %s caracteres
+error_formato_invalido:%s no tiene un formato válido
+operacion_exito:Operación realizada con éxito
+introduce_tu:Introduce tu %s
+email_generico:nombre@dominio.es
+nombre:Nombre
+apellido1:Primer Apellido
+apellido2:Segundo Apellido
+fecha_nacimiento:Fecha Nacimiento
+email:E-mail
+alta_usuario:Alta de usuario
+anterior:Anterior
+siguiente:Siguiente
