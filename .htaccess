@@ -7,3 +7,6 @@ RewriteRule ^usuarios/([^/]+)/([0-9]+)/?$ index.php?seccion=usuarios&oper=$1&pag
 RewriteRule ^usuarios/([^/]+)/?$ index.php?seccion=usuarios&oper=$1 [L]
 
 #RewriteRule ^producto/([0-9]+)$ index.php?seccion=producto&id=$1 [L]
+RewriteRule ^resume index.php?seccion=resume[L]
+RewriteRule ^projects index.php?seccion=projects[L]
+RewriteRule ^contact index.php?seccion=contact[L]
