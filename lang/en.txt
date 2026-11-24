@@ -1,0 +1,17 @@
+usuarios:Users
+eliminacion:Deletion
+modificacion:Modification
+alta:Addition
+error_caracteres:%s must contain at least %s characters
+error_formato_invalido:%s does not have a valid format
+operacion_exito:Operation completed successfully
+introduce_tu:Enter your %s
+email_generico:name@domain.com
+nombre:First Name
+apellido1:Last Name
+apellido2:Second Last Name
+fecha_nacimiento:Date of Birth
+email:E-mail
+alta_usuario:User Registration
+anterior:Previous
+siguiente:Next
